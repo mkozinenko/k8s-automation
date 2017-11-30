@@ -1,0 +1,43 @@
+pipelineJob('springboot_demo') {
+    properties {
+        githubProjectUrl('https://github.com/GoogleCloudPlatform/getting-started-java.git')
+    }
+    scm {
+        git {
+            remote {
+                url('https://github.com/GoogleCloudPlatform/getting-started-java.git')
+                name('origin')
+            }
+            branch('master')
+            browser {
+                gitWeb('https://github.com/GoogleCloudPlatform/getting-started-java.git')
+            }
+            extensions {
+                cleanBeforeCheckout()
+            }
+        }
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/mkozinenko/k8s-automation.git')
+                        name('origin')
+                    }
+                    branch('master')
+                    browser {
+                        gitWeb('https://github.com/mkozinenko/k8s-automation.git')
+                    }
+                    extensions {
+                        cleanBeforeCheckout()
+                    }
+                }
+            }
+            scriptPath('build.groovy')
+        }
+        configure { project ->
+                    (project / 'authToken').setValue("${jenkinsToken}")
+                }
+    }
+}
