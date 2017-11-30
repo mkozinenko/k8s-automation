@@ -28,4 +28,6 @@ RUN set -ex; \
     \
     dockerd -v; \
     docker -v
+RUN mkdir /etc/docker/
+ADD daemon.json /etc/docker/
 USER jenkins

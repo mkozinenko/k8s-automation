@@ -39,7 +39,7 @@ spec:
         tier: backend
     spec:
       containers:
-      - image: registry:5000/springboot-demo:latest
+      - image: mkozinenko/springboot-demo:latest
         imagePullPolicy: "Always"
         name: springboot-demo
         ports:
@@ -130,8 +130,8 @@ podTemplate(
                         echo "Building and pushing springboot-demo webapp image ..."
                         sh "echo \"${dockerfile}\" > ./Dockerfile"
                         sh "cp ${WORKSPACE}/helloworld-springboot/target/helloworld-springboot-0.0.1-SNAPSHOT.jar ."
-                        sh "docker build -t registry:5000/springboot-demo:${env.BUILD_NUMBER} ."
-                        sh "docker push registry:5000/springboot-demo:${env.BUILD_NUMBER}"
+                        sh "docker build -t mkozinenko/springboot-demo:${env.BUILD_NUMBER} ."
+                        sh "docker push mkozinenko/springboot-demo:${env.BUILD_NUMBER}"
                         sh "docker rmi -f `docker images -q` | true"
                     }
                 }
