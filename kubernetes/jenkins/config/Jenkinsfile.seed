@@ -37,7 +37,7 @@ pipelineJob('springboot_demo') {
             scriptPath('build.groovy')
         }
         configure { project ->
-                    (project / 'authToken').setValue("testToken")
+                    (project / 'authToken').setValue("jenkinsToken")
                 }
     }
 }
