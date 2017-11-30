@@ -84,7 +84,7 @@ podTemplate(
                         image: 'mkozinenko/jenkins-slave-docker',
                         ttyEnabled: true,
                         privileged: true,
-                        alwaysPullImage: false,
+                        alwaysPullImage: true,
                         workingDir: '/home/jenkins',
                         command: 'cat'
                 ),
