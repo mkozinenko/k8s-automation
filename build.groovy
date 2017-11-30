@@ -81,11 +81,13 @@ podTemplate(
                 ),
                 containerTemplate(
                 name: 'dind',
-                image: 'mkozinenko/docker-dind',
+                image: 'lordgaav/dind-options:latest',
                 ttyEnabled: true,
                 privileged: true,
+                alwaysPullImage: true,
                 envVars: [
                   containerEnvVar(key: 'DOCKER_DRIVER', value: 'overlay'),
+                  containerEnvVar(key: 'DOCKER_OPTS', value: '--insecure-registry=registry:5000')
                 ]
                 ),
                 containerTemplate(
