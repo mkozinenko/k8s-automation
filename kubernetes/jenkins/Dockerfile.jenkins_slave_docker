@@ -25,4 +25,3 @@ RUN curl -fL -o docker.tgz https://download.docker.com/linux/static/edge/x86_64/
 	tar -xzf docker.tgz -C /usr/local/bin/ --strip-components=1  && \
 	rm docker.tgz
 
-USER jenkins
