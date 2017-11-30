@@ -141,7 +141,7 @@ podTemplate(
                     container('jenkins-slave-kubectl') {
                         def NAME = "springboot-demo"
                         deployment = deployment.replaceAll('springboot-demo:latest', "springboot-demo:${env.BUILD_NUMBER}")
-                        sh "echo ${deployment} | kubectl apply -f -"
+                        sh "echo \"${deployment}\" | kubectl apply -f -"
                         sleep time: 120, unit: 'SECONDS'
 
                     }

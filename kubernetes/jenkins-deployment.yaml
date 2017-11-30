@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins
+  name: jenkins-master
   labels:
-    app: jenkins
+    app: jenkins-master
 spec:
   ports:
     - port: 8080
@@ -18,20 +18,20 @@ spec:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: jenkins
+  name: jenkins-master
   labels:
-    app: jenkins
+    app: jenkins-master
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jenkins
+      app: jenkins-master
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: jenkins
+        app: jenkins-master
     spec:
       securityContext:
         runAsUser: 10000
@@ -39,7 +39,7 @@ spec:
       containers:
       - image: mkozinenko/jenkins-master:latest
         imagePullPolicy: "Always"
-        name: jenkins
+        name: jenkins-master
         ports:
         - containerPort: 8080
           name: jenkins-ui

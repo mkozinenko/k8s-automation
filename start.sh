@@ -13,4 +13,15 @@ kubectl apply -f ../kubernetes/registry-deployment.yaml
 kubectl apply -f ../kubernetes/jenkins-deployment.yaml
 
 
+#kubectl rollout status deployment/jenkins
 #kubectl port-forward $(kubectl get po | grep jenkins | awk '{print $1}') 8080:8080 && curl -XPOST http://localhost:8080/job/springboot_demo/build?token=jenkinsToken
+
+job_status=`curl http://jenkins:8080/view/job/other-job/lastBuild/api/json | grep "\"result\":\"SUCCESS\""`
+
+if [ -n "$job_status" ]
+then
+    # Run your script commands here
+else
+  echo "BUILD FAILURE: Other build is unsuccessful or status could not be obtained."
+  exit 1
+fi
