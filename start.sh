@@ -13,7 +13,7 @@ kubectl apply -f ../kubernetes/registry-deployment.yaml
 kubectl apply -f ../kubernetes/jenkins-deployment.yaml
 
 
-kubectl rollout status deployment/jenkins
+kubectl rollout status deployment/jenkins-master
 kubectl port-forward $(kubectl get po | grep jenkins-master | awk '{print $1}') 8080:8080 && curl -XPOST http://admin:admin@localhost:8080/job/springboot_demo/build?token=jenkinsToken
 
 #job_status=`curl http://admin:admin@localhost:8080/job/springboot_demo/lastBuild/api/json | grep "\"result\":\"SUCCESS\""`
