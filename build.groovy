@@ -80,10 +80,18 @@ podTemplate(
                         command: 'cat'
                 ),
                 containerTemplate(
+                name: 'dind',
+                image: 'docker:17.03.1-ce-dind',
+                ttyEnabled: true,
+                privileged: true,
+                envVars: [
+                  containerEnvVar(key: 'DOCKER_DRIVER', value: 'overlay'),
+                ]
+                ),
+                containerTemplate(
                         name: 'jenkins-slave-docker',
                         image: 'mkozinenko/jenkins-slave-docker',
                         ttyEnabled: true,
-                        privileged: true,
                         alwaysPullImage: true,
                         envVars: [
                           containerEnvVar(key: 'DOCKER_HOST', value: 'tcp://localhost:2375'),
