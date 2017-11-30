@@ -76,7 +76,8 @@ podTemplate(
                         ttyEnabled: true,
                         privileged: false,
                         alwaysPullImage: false,
-                        workingDir: '/home/jenkins'
+                        workingDir: '/home/jenkins',
+                        command: 'cat'
                 ),
                 containerTemplate(
                         name: 'jenkins-slave-docker',
@@ -84,7 +85,8 @@ podTemplate(
                         ttyEnabled: true,
                         privileged: true,
                         alwaysPullImage: false,
-                        workingDir: '/home/jenkins'
+                        workingDir: '/home/jenkins',
+                        command: 'cat'
                 ),
                 containerTemplate(
                         name: 'jenkins-slave-kubectl',
@@ -92,7 +94,8 @@ podTemplate(
                         ttyEnabled: true,
                         privileged: false,
                         alwaysPullImage: false,
-                        workingDir: '/home/jenkins'
+                        workingDir: '/home/jenkins',
+                        command: 'cat'
                 )
 
         ],
