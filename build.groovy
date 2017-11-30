@@ -81,7 +81,7 @@ podTemplate(
                 ),
                 containerTemplate(
                 name: 'dind',
-                image: 'docker:17.03.1-ce-dind',
+                image: 'mkozinenko/docker-dind',
                 ttyEnabled: true,
                 privileged: true,
                 envVars: [

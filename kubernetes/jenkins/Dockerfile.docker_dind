@@ -1,0 +1,4 @@
+FROM docker:17.03.1-ce-dind
+
+RUN mkdir /etc/docker/
+ADD daemon.json /etc/docker/

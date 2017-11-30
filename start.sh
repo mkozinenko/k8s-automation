@@ -13,4 +13,4 @@ kubectl apply -f ../kubernetes/registry-deployment.yaml
 kubectl apply -f ../kubernetes/jenkins-deployment.yaml
 
 
-#curl -XPOST http://localhost:8080/job/springboot_demo/build?token=jenkinsToken
+#kubectl port-forward $(kubectl get po | grep jenkins | awk '{print $1}') 8080:8080 && curl -XPOST http://localhost:8080/job/springboot_demo/build?token=jenkinsToken
