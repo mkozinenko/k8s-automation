@@ -7,7 +7,7 @@ def k = new KubernetesCloud(
         'jenkins',
         null,
         'https://kubernetes/',
-        'jenkins',
+        'default',
         'http://jenkins:8080/',
         '10', 15, 15, 5
 )
