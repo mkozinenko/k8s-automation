@@ -128,7 +128,7 @@ podTemplate(
                 stage("Build and push springboot webapp image") {
                     container('jenkins-slave-docker') {
                         echo "Building and pushing springboot-demo webapp image ..."
-                        sh "echo dockerfile > Dockerfile"
+                        sh "echo ${dockerfile} > ./Dockerfile"
                         sh "cp ${WORKSPACE}/helloworld-springboot/target/helloworld-springboot-0.0.1-SNAPSHOT.jar ."
                         sh "docker build -t registry:5000/springboot-demo:${env.BUILD_NUMBER} ."
                         sh "docker push registry:5000/springboot-demo:${env.BUILD_NUMBER}"
