@@ -88,7 +88,6 @@ podTemplate(
                         workingDir: '/home/jenkins',
                         command: 'cat'
                 ),
-                ,
                 containerTemplate(
                         name: 'jenkins-slave-kubectl',
                         image: 'mkozinenko/jenkins-slave-kubectl',
@@ -98,7 +97,7 @@ podTemplate(
                         workingDir: '/home/jenkins',
                         command: 'cat'
                 )
-                )
+
         ],
         volumes: [
                 hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')

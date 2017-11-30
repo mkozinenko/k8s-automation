@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+rm -rf kubernetes-vagrant-coreos-cluster
+
 git clone https://github.com/pires/kubernetes-vagrant-coreos-cluster.git
 
 cd kubernetes-vagrant-coreos-cluster
