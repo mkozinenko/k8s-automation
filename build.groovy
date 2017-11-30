@@ -68,7 +68,7 @@ podTemplate(
         label: 'slave',
         cloud: 'jenkins',
         name: 'jenkins-slave',
-        namespace: 'jenkins',
+        namespace: 'default',
         containers: [
                 containerTemplate(
                         name: 'jenkins-slave-mvn',
