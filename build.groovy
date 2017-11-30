@@ -85,6 +85,9 @@ podTemplate(
                         ttyEnabled: true,
                         privileged: true,
                         alwaysPullImage: true,
+                        envVars: [
+                          containerEnvVar(key: 'DOCKER_HOST', value: 'tcp://localhost:2375'),
+                        ],
                         workingDir: '/home/jenkins',
                         command: 'cat'
                 ),
