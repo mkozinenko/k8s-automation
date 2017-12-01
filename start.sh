@@ -43,8 +43,8 @@ job_status=''
 until [ -n "$job_status" ]; do job_status=`curl -s http://admin:admin@localhost:8080/job/springboot_demo/lastBuild/api/json | grep "\"building\":false"` && sleep 60;done
 
 # dirty hack to workaround vagrant+coreos resolve issue, that prevents working with internal services like registry on host level.
-vagrant ssh master -c "echo nameserver=$DNS_IP |sudo tee -a /etc/resolv.conf"
-for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "echo nameserver=$DNS_IP |sudo tee -a /etc/resolv.conf";done
+vagrant ssh master -c "echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf"
+for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf";done
 
 # check if springboot was rolled out correctly
 kubectl rollout status deployment/springboot-demo
