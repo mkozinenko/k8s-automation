@@ -27,8 +27,10 @@ you can manually map Jenkins pod and check/trigger job
 Deployment scaling (up and down): Please, use scale.sh wrapper:
 
 ```bash
-./scale.sh <bumber of replicas desired>
+./scale.sh 5
 ```
+
+Please, insert number of replicas desired instead of 5
 
 Current implementation has issues with DNS inside the cluster and lack of time for fixing that permanently.
 
