@@ -38,7 +38,7 @@ Current implementation has issues with DNS inside the cluster and lack of time f
 
 ```bash
 cd kubernetes-vagrant-coreos-cluster
-NODES=2 vagrant destry -f
+NODES=2 vagrant destroy -f
 ```
 
 you will be prompted for host sudo password to unmount NFS volumes (modify /etc/exports in Mac OS case)
