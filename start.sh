@@ -14,6 +14,9 @@ mv ~/.kube/config ~/.kube/config.pre-vagrant
 # create k8s cluster
 NODE_MEM=2048 NODE_CPUS=1 NODES=$NODE_COUNT MASTER_CPUS=1 USE_KUBE_UI=true DOCKER_OPTIONS="--insecure-registry=registry.default.svc.cluster.local:5000" vagrant up
 
+vagrant ssh master -c "sudo rm /etc/resolv.conf && sudo cp /run/systemd/resolve/resolv.conf /etc/resolv.conf && echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf"
+for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "sudo rm /etc/resolv.conf && sudo cp /run/systemd/resolve/resolv.conf /etc/resolv.conf && echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf";done
+
 
 # apply jenkins and registry manifests. You can edd ELK and/or monitoring here
 # uncomment below to enable standalone monitoring with heapster
@@ -42,11 +45,6 @@ echo "Checking if build job completed... please wait. You can check progress at 
 
 job_status=''
 until [ -n "$job_status" ]; do job_status=`curl -s http://admin:admin@localhost:8080/job/springboot_demo/lastBuild/api/json | grep "\"building\":false"` && sleep 60;done
-
-# dirty hack to workaround vagrant+coreos resolve issue, that prevents working with internal services like registry on host level.
-
-vagrant ssh master -c "sudo rm /etc/resolv.conf && sudo cp /run/systemd/resolve/resolv.conf /etc/resolv.conf && echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf"
-for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "sudo rm /etc/resolv.conf && sudo cp /run/systemd/resolve/resolv.conf /etc/resolv.conf && echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf";done
 
 # check if springboot was rolled out correctly
 kubectl rollout status deployment/springboot-demo
