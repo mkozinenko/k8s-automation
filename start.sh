@@ -25,6 +25,7 @@ for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "sudo rm /etc/resolv
 # comment 3 lines below to disable standalone monitoring with heapster
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
 kubectl rollout status deployment/heapster --namespace=kube-system
+sleep 20
 kubectl delete po $(kubectl get po --namespace=kube-system | grep kubernetes-dashboard | awk '{print $1}') --namespace=kube-system
 kubectl apply -f ../kubernetes/registry-deployment.yaml
 kubectl apply -f ../kubernetes/jenkins-deployment.yaml
