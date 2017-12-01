@@ -16,7 +16,8 @@ NODE_MEM=2048 NODE_CPUS=1 NODES=$NODE_COUNT MASTER_CPUS=1 USE_KUBE_UI=true DOCKE
 
 
 # apply jenkins and registry manifests. You can edd ELK and/or monitoring here
-#kubectl apply -f ../kubernetes/calico-service.yml
+# uncomment below to enable standalone monitoring with heapster
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
 kubectl apply -f ../kubernetes/registry-deployment.yaml
 kubectl apply -f ../kubernetes/jenkins-deployment.yaml
 
