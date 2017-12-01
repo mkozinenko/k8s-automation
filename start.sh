@@ -49,9 +49,12 @@ for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "echo nameserver=$DN
 # check if springboot was rolled out correctly
 kubectl rollout status deployment/springboot-demo
 
+# get portforward process PID
 export PFW_PID=`ps -ef | grep "kubectl port-forward"| awk 'FNR==1{print $2}'`
 echo "Killing Jenkins port-forward process, PID:":$PFW_PID"..."
 kill -9 $PFW_PID
+
+# get springboot url
 export SERVICE_PORT=`kubectl get svc springboot-demo -o yaml | grep nodePort | awk '{print $2}'`
 export MASTER_IP=`vagrant ssh master -c "ifconfig eth1 | grep inet" | awk 'FNR == 1 {print $2}'`
 
