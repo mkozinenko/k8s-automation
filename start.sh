@@ -46,7 +46,7 @@ until [ -z "$job_started" ]; do job_started=`curl -s -XPOST http://admin:admin@l
 echo "Checking if build job completed... please wait. You can check progress at http://localhost:8080/job/springboot_demo/"
 
 job_status=''
-until [ -n "$job_status" ]; do job_status=`curl -s http://admin:admin@localhost:8080/job/springboot_demo/lastBuild/api/json | grep "\"building\":false"` && sleep 60;done
+until [ -n "$job_status" ]; do job_status=`curl -s http://admin:admin@localhost:8080/job/springboot_demo/lastBuild/api/json | grep "\"building\":false` && sleep 60;done
 
 # check if springboot was rolled out correctly
 kubectl rollout status deployment/springboot-demo
