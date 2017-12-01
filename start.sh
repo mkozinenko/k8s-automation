@@ -14,6 +14,9 @@ mv ~/.kube/config ~/.kube/config.pre-vagrant
 # create k8s cluster
 NODE_MEM=2048 NODE_CPUS=1 NODES=$NODE_COUNT MASTER_CPUS=1 USE_KUBE_UI=true DOCKER_OPTIONS="--insecure-registry=registry.default.svc.cluster.local:5000" vagrant up
 
+# get kube_dns cluster IP
+export DNS_IP=`kubectl get svc kube-dns --namespace=kube-system | awk 'NR>1{print $2}'`
+
 vagrant ssh master -c "sudo rm /etc/resolv.conf && sudo cp /run/systemd/resolve/resolv.conf /etc/resolv.conf && echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf"
 for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "sudo rm /etc/resolv.conf && sudo cp /run/systemd/resolve/resolv.conf /etc/resolv.conf && echo nameserver $DNS_IP |sudo tee -a /etc/resolv.conf";done
 
@@ -27,9 +30,6 @@ kubectl apply -f ../kubernetes/jenkins-deployment.yaml
 # check if Jenkins rolled out.
 kubectl rollout status deployment/jenkins-master
 sleep 20
-
-# get kube_dns cluster IP
-export DNS_IP=`kubectl get svc kube-dns --namespace=kube-system | awk 'NR>1{print $2}'`
 
 # connect to Jenkins using localhost port mapping
 kubectl port-forward $(kubectl get po | grep jenkins-master | awk '{print $1}') 8080:8080 2>&1 >/dev/null&
