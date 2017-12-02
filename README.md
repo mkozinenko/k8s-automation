@@ -24,15 +24,12 @@ you can use kubectl to operate created K8s cluster. All app-related stuff is dep
 
 you can manually map Jenkins pod and check/trigger job 
 
-Deployment scaling (up and down): Please, use scale.sh wrapper:
+Deployment scaling (up and down):
 
 ```bash
-./scale.sh 5
+kubectl scale deployment springboot-demo --replicas=5
 ```
-
-Please, insert number of replicas desired instead of 5
-
-Current implementation has issues with DNS inside the cluster and lack of time for fixing that permanently.
+Replace 5 with desired number of replicas
 
 ### Extending:
 
