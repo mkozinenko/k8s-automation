@@ -53,7 +53,7 @@ until [ -n "$job_status" ]; do job_status=`curl -s http://admin:admin@localhost:
 kubectl rollout status deployment/springboot-demo
 
 # get portforward process PID
-export PFW_PID=`ps -ef | grep "kubectl port-forward"| awk 'FNR==1{print $2}'`
+export PFW_PID=`ps -ef | grep "kubectl port-forward"| grep "8080:8080" | awk 'FNR==1{print $2}'`
 echo "Killing Jenkins port-forward process, PID:":$PFW_PID"..."
 kill -9 $PFW_PID
 
