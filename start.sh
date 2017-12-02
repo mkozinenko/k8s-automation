@@ -12,7 +12,7 @@ cd kubernetes-vagrant-coreos-cluster
 mv ~/.kube/config ~/.kube/config.pre-vagrant
 
 # create k8s cluster
-NODE_MEM=2048 NODE_CPUS=1 NODES=$NODE_COUNT MASTER_CPUS=1 USE_KUBE_UI=true DOCKER_OPTIONS="--insecure-registry=registry.default.svc.cluster.local:5000" vagrant up
+NODE_MEM=3072 NODE_CPUS=2 NODES=$NODE_COUNT MASTER_CPUS=1 USE_KUBE_UI=true DOCKER_OPTIONS="--insecure-registry=registry.default.svc.cluster.local:5000" vagrant up
 
 # get kube_dns cluster IP
 export DNS_IP=`kubectl get svc kube-dns --namespace=kube-system | awk 'NR>1{print $2}'`
@@ -25,10 +25,14 @@ for ((i=1; i<=$NODE_COUNT;i++)) ;do vagrant ssh node-0$i -c "sudo rm /etc/resolv
 # comment 3 lines below to disable standalone monitoring with heapster
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
 kubectl rollout status deployment/heapster --namespace=kube-system
-sleep 20
+sleep 30
 kubectl delete po $(kubectl get po --namespace=kube-system | grep kubernetes-dashboard | awk '{print $1}') --namespace=kube-system
+
+# apply Jenkins and registry deployments
 kubectl apply -f ../kubernetes/registry-deployment.yaml
 kubectl apply -f ../kubernetes/jenkins-deployment.yaml
+
+
 
 # check if Jenkins rolled out.
 kubectl rollout status deployment/jenkins-master
@@ -62,6 +66,7 @@ export SERVICE_PORT=`kubectl get svc springboot-demo -o yaml | grep nodePort | a
 export MASTER_IP=`vagrant ssh master -c "ifconfig eth1 | grep inet" | awk 'FNR == 1 {print $2}'`
 
 curl $MASTER_IP:$SERVICE_PORT
+echo ""
 
 echo "Please, check springboot-demo application at http://"$MASTER_IP":"$SERVICE_PORT
 echo "Kubernetes Dashboard is accessible at http://"$MASTER_IP":8080/ui"

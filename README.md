@@ -33,9 +33,13 @@ Replace 5 with desired number of replicas
 
 ### Extending:
 
-You can easily add Fluentd+ES+Kibana to current solution using kubectl and provided yaml files on
+If you have nodes with at least 3GB RAM and 2CPUs (default config), you can enable Fluentd+ES+Kibana logging:
 
-https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch
+(please make sure to set NODES_COUNT to the same value, you used in ./start.sh)
+
+```bash
+./logging.sh
+```
 
 ### Cleanup:
 
